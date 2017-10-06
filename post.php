@@ -1,5 +1,5 @@
 <?php 
-echo $_POST['name'];  // treba kliknuti Submit da ne bude error jer nema aaaa uvjeta za if isset()
+echo $_POST['name'];  // treba kliknuti Submit da ne bude error jer nema uvjeta za if isset()
 ?>
 
 <!DOCTYPE html>
