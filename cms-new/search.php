@@ -12,16 +12,32 @@
             <!-- Blog Entries Column -->
             <div class="col-md-8">
 
-<?php // query za post
-$query = "SELECT * FROM posts";
-$select_all_posts_query = mysqli_query($connection, $query);
+<?php 
+if (isset($_POST['submit'])) {
+    $search = $_POST['search'];
+    
+// search baze
+$query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%' ";
+$search_query = mysqli_query($connection, $query);
 
-      while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
+if (!$search_query) {
+    die('Query failed '. mysqli_error($connection));
+}
+
+$result = mysqli_num_rows($search_query);
+if ($result == 0) {
+    echo '<h3>' . "NO RESULT" . '<h3>';
+} else {
+
+// query za search post
+
+      while ($row = mysqli_fetch_assoc($search_query)) {
           $post_title = $row['post_title'];
           $post_author = $row['post_author'];
           $post_date = $row['post_date'];
           $post_image = $row['post_image'];
           $post_content = $row['post_content'];
+
 ?>
 
 <h1 class="page-header">
@@ -29,7 +45,7 @@ $select_all_posts_query = mysqli_query($connection, $query);
                     <small>Secondary Text</small>
                 </h1>
 
-                <!-- First Blog Post -->
+                <!-- Blog Post -->
                 <h2>
                     <a href="#"><?php echo $post_title ?></a>
                 </h2>
@@ -45,7 +61,7 @@ $select_all_posts_query = mysqli_query($connection, $query);
 
                 <hr> <!-- crta -->
 
-<?php  } ?> <!-- end of while loop + post -->
+<?php  } }} ?> <!-- end of while loop + post -->
 
                
             </div> <!-- end of div col md-8 -->
