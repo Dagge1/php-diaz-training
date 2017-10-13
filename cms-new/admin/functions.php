@@ -1,6 +1,26 @@
 <?php // funkcije za pojedine radnje u kodu - refactoring da bude kod na stranama čistiji
 
 
+// funkcija za potvrdu queryja jednokratno (ima dva ulazna argumenta)
+function confirm($query, $id) {  // id je $post_category_id i provjerava da li je unesen broj a ne string
+    global $connection;
+    if (!$query) {
+        if (gettype($id) != 'integer') {
+            echo "'<b>Post Category Id</b>' polje mora biti broj<br>";
+        }
+        die('QUERY FAILED ' . mysqli_error($connection));
+    }
+}
+
+// funkcija za potvrdu queryja za ostale slučajeve
+function confirmQuery($query) {
+    global $connection;
+    if (!$query) {
+        die('QUERY FAILED ' . mysqli_error($connection));
+    }
+}
+
+
 // ubaci kategorije u Admin/categories.php
 function insert_categories() {
     global $connection;  // mora biti deklarirana var kao global jer je unutar funkcije sve lokalno

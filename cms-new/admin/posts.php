@@ -17,7 +17,7 @@
     <h1 class="page-header">Welcome to Posts<small> Author</small></h1>
 
 
- <!-- ovdje ide table iz view_all_posts.php -->
+ <!-- ovdje ide u sredinu strane table iz view_all_posts.php -->
 <?php 
 if (isset($_GET['source'])) {
     $source = $_GET['source'];
@@ -30,8 +30,9 @@ switch($source) {
     include"includes/add_post.php";
     break;
 
-    case '100':
-    echo 'Noce 100';
+    case 'edit_post':
+    include"includes/edit_post.php";
+    
     break;
 
     default:

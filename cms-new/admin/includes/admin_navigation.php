@@ -46,7 +46,8 @@
                                 <a href="posts.php">View All Posts</a>
                             </li>
                             <li>
-                                <a href="#">Add Post</a>
+                                <a href="?source=add_post">Add Post</a> <!-- kada klikne ode na.. -->
+                                <!-- posts.php?source=add_post bazirano na switch() slanju unutar posts.php -->
                             </li>
                         </ul>
                     </li>
