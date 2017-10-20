@@ -13,7 +13,12 @@
             <div class="col-md-8">
 
 <?php // query za post
-$query = "SELECT * FROM posts";
+
+if (isset($_GET['category'])) {
+    $post_category_id = $_GET['category'];
+}
+
+$query = "SELECT * FROM posts WHERE post_category_id = '$post_category_id' ";
 $select_all_posts_query = mysqli_query($connection, $query);
 
       while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
@@ -29,7 +34,6 @@ $select_all_posts_query = mysqli_query($connection, $query);
                     Page Heading
                     <small>Secondary Text</small>
                 </h1>
-
 
                 <!-- First Blog Post -->
                 <h2>
