@@ -69,25 +69,31 @@ move_uploaded_file($post_image_temp, "../images/$post_image");
     <input type="text" value="<?php echo $post_title; ?>" class="form-control" name="post_title">    
 </div>
 
+
+
 <!-- pulldown menu -->
 <div class="form-group">
-    <select name="post_category" id="">
+    <select name="user_role" id="">
 <?php
-$query = "SELECT * FROM categories"; 
-    $select_categories = mysqli_query($connection, $query);
+$query = "SELECT * FROM users"; 
+    $select_users = mysqli_query($connection, $query);
 
-    confirmQuery($select_categories);  // za potvrdu queryja
+    confirmQuery($select_users);  // za potvrdu queryja
 
-while ($row = mysqli_fetch_assoc($select_categories)) {
-    $cat_id = $row['cat_id'];
-    $cat_title = $row['cat_title']; 
+while ($row = mysqli_fetch_assoc($select_users)) {
+    $user_id = $row['user_id'];
+    $user_role = $row['user_role']; 
 
-    echo "<option value='$cat_id' >$cat_title</option>";   
+    echo "<option value='$user_id'>$user_role</option>";   
       
 }
 ?>
     </select>
 </div>
+
+
+
+
 
 <div class="form-group">
     <label for="author">Post Author</label>

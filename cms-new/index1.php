@@ -24,9 +24,11 @@ $select_all_posts_query = mysqli_query($connection, $query);
           $post_image = $row['post_image'];
           $post_content = substr($row['post_content'], 0, 250);
           $post_status = $row['post_status'];
-      
-    //   ako je status 'published' prikaži    
+
+
       if ($post_status == 'published') {
+          echo "<h3 class='text-center'>No posts sorry</h3>";
+      }  else  { 
 ?>
 
 <h1 class="page-header">
@@ -51,21 +53,7 @@ $select_all_posts_query = mysqli_query($connection, $query);
 
                 <hr> <!-- crta -->
 
-<?php  } }?> <!-- end of while loop + post + end of if 'published' -->
-
-<?php  // ako nema postova sa statusom 'published'
-$query = "SELECT * FROM posts WHERE post_status = 'published' ";
-$select_all_approved = mysqli_query($connection, $query);
-$no_posts = mysqli_num_rows($select_all_approved);
-
-if ($no_posts == 0) {
-    echo "<h3 class='text-center'>No posts sorry</h3>";
-}
-?>
-
-
-
-
+<?php  } }?> <!-- end of while loop + post + end of else -->
 
                
             </div> <!-- end of div col md-8 -->
