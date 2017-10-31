@@ -23,6 +23,7 @@ $query .= "'$post_content', '$post_tags', '$post_status') ";
 $create_post_query = mysqli_query($connection, $query);
 
 confirm($create_post_query, $post_category_id); // funkcija za potvrdu queryja, u functions.php
+header("Location: ./posts.php");
 }
 ?>
 

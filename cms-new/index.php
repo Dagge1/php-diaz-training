@@ -64,9 +64,6 @@ if ($no_posts == 0) {
 ?>
 
 
-
-
-
                
             </div> <!-- end of div col md-8 -->
 

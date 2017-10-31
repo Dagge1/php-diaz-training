@@ -17,7 +17,7 @@
     <h1 class="page-header">Welcome to Users<small> Author</small></h1>
 
 
- <!-- ovdje ide u sredinu strane table iz view_all_posts.php -->
+ <!-- ovdje ide u sredinu strane tabla ovisno o izboru dolje -->
 <?php 
 if (isset($_GET['source'])) {
     $source = $_GET['source'];

@@ -3,6 +3,13 @@
 <!-- ob_start() 'skuplja' podatke sa stranice (tekst itd) i naknadno sve šalje u headeru a ne jedan po jedan kada je header već poslan -->
 <?php include "../includes/db.php"; ?>
 <?php include "functions.php"; ?>
+<?php session_start(); ?> <!-- za korištenje user podataka dobivenih u login str. -->
+
+<?php // ako se user odlogirao 'user_role' više ne postoji i redirecta ga na index.php
+    if (!isset($_SESSION['user_role'])) {
+        header("Location: ../index.php");
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,6 +40,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
 <body>
