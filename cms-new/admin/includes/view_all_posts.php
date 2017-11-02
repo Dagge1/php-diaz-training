@@ -1,8 +1,56 @@
 <!-- tabla iz posts.php za prikaz postova (defaultni krikaz) -->
+<?php 
+if (isset($_POST['checkBoxArray'])) {
+    foreach($_POST['checkBoxArray'] as $postValueId) {
+        $bulk_options = $_POST['bulk_options'];
 
+    switch($bulk_options) {
+        case 'published':
+        $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE post_id = {$postValueId} ";
+        $update_to_published_status = mysqli_query($connection, $query);
+        confirmQuery($update_to_published_status);
+        break;
+
+        case 'draft':
+        $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE post_id = {$postValueId} ";
+        $update_to_draft_status = mysqli_query($connection, $query);
+        confirmQuery($update_to_draft_status);
+        break;
+
+        case 'delete':
+        $query = "DELETE FROM posts WHERE post_id = {$postValueId} ";
+        $update_to_delete_status = mysqli_query($connection, $query);
+        confirmQuery($update_to_delete_status);
+        break;
+
+    }    
+    }   
+}
+
+?>
+
+
+<form action="" method="POST">
 <table class="table table-striped table-condensed table-hover">
+
+<div id="bulkOptionsContainer" class="col-xs-2" style="padding: 0px">
+    
+    <select class="form-control" name="bulk_options" id="">
+        <option value="">Select Options</option>    
+        <option value="published">Publish</option>    
+        <option value="draft">Draft</option>    
+        <option value="delete">Delete</option>    
+    </select>
+</div>
+
+<div class="col-xs-4">
+<input type="submit" name="submit" class="btn btn-success" value="Apply">
+<a class="btn btn-primary" href="posts.php?source=add_post">Add New</a>
+</div>
+
         <thead>
             <tr>
+                <th><input type="checkbox" id="selectAllBoxes"></th>
                 <th>Id</th>
                 <th>Author</th>
                 <th>Title</th>
@@ -34,6 +82,11 @@ while ($row = mysqli_fetch_assoc($select_posts)) {
     $post_date = $row['post_date'];
 
     echo "<tr>";
+    ?>
+<!-- name=checkBoxArray mora biti sa [] jer je to array, ali kad se name koristi može bez [] -->
+<td><input type="checkbox" class="checkbox" name="checkBoxArray[]" value="<?php echo $post_id; ?>"></td>
+
+    <?php 
     echo "<td>{$post_id}</td>";
     echo "<td>{$post_author}</td>";
     echo "<td>{$post_title}</td>";
@@ -61,6 +114,7 @@ while ($row = mysqli_fetch_assoc($select_categories_id)) {
 ?>
         </tbody>
 </table>
+</form>
 
 <?php   // kod za deletanje posta u posts.php (koji u switch() defaultno ubacuje stranicu view_all_posts.php) 
 if (isset($_GET['delete'])) {

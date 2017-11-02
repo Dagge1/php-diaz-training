@@ -3,6 +3,9 @@
 <!-- ob_start() 'skuplja' podatke sa stranice (tekst itd) i naknadno sve šalje u headeru a ne jedan po jedan kada je header već poslan -->
 <?php include "../includes/db.php"; ?>
 <?php include "functions.php"; ?>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=54ruah2qpe0q7d5mwnblaoa86ge238560wlkznzvhk0tdfqk"></script>
+
 <?php session_start(); ?> <!-- za korištenje user podataka dobivenih u login str. -->
 
 <?php // ako se user odlogirao 'user_role' više ne postoji i redirecta ga na index.php

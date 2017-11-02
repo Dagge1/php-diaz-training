@@ -28,7 +28,7 @@ if (isset($_POST['update_post'])) {
     $post_status = $_POST['post_status'];
     $post_image = $_FILES['image']['name'];
     $post_image_temp = $_FILES['image']['tmp_name'];
-    $post_content = $_POST['post_content'];
+    $post_content = mysqli_real_escape_string($connection, $_POST['post_content']);
     $post_tags = $_POST['post_tags'];
 
 move_uploaded_file($post_image_temp, "../images/$post_image");
@@ -56,8 +56,6 @@ move_uploaded_file($post_image_temp, "../images/$post_image");
     $update_post = mysqli_query($connection, $query);
     confirmQuery($update_post);
     header("Location: ./posts.php");
-
-
 };
 ?>
 
@@ -94,10 +92,23 @@ while ($row = mysqli_fetch_assoc($select_categories)) {
     <input type="text" value="<?php echo $post_author; ?>" class="form-control" name="author">    
 </div>
 
+
 <div class="form-group">
-    <label for="post_status">Post Status</label>
-    <input type="text" value="<?php echo $post_status; ?>" class="form-control" name="post_status">    
+<select name="post_status" id="">
+    <option value='<?php echo $post_status; ?>'><?php echo $post_status; ?></option>
+
+<?php // select za odabrati 'draft' ili 'published' meni u editiranju posta
+if ($post_status== 'published') {
+    echo "<option value='draft'>draft</option>";
+} else {
+    echo "<option value='published'>publish</option>";
+}
+
+?>
+
+</select>
 </div>
+
 
 <div class="form-group">
     <label for="image">Post Image</label>
