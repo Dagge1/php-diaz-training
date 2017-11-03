@@ -72,10 +72,15 @@ while ($row = mysqli_fetch_assoc($select_categories)) {
     <input type="text" class="form-control" name="author">    
 </div>
 
+<!-- select forma za odabir post statusa -->
 <div class="form-group">
-    <label for="post_status">Post Status</label>
-    <input type="text" class="form-control" name="post_status">    
+    <select name="post_status" id="">
+        <option value="draft">Post Status</option>
+        <option value="published">Published</option>
+        <option value="draft">Draft</option>
+    </select>
 </div>
+
 
 <div class="form-group">
     <label for="image">Post Image</label>

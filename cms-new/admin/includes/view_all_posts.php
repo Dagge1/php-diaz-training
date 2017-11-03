@@ -89,8 +89,9 @@ while ($row = mysqli_fetch_assoc($select_posts)) {
     <?php 
     echo "<td>{$post_id}</td>";
     echo "<td>{$post_author}</td>";
-    echo "<td>{$post_title}</td>";
-
+    echo "<td><a href='../post.php?p_id={$post_id}'>{$post_title}</a></td>";
+    
+    
     // query za prikaz kategorije
 $query = "SELECT * FROM categories WHERE cat_id = '$post_category_id' "; 
     $select_categories_id = mysqli_query($connection, $query);
