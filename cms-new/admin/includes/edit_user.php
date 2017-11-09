@@ -9,7 +9,7 @@ if (isset($_GET['edit_user'])) {
     while ($row = mysqli_fetch_assoc($select_users_query)) {
         $user_id = $row['user_id'];
         $username = $row['username'];
-        $user_password = $row['user_password'];
+        $user_db_password = $row['user_password'];
         $user_firstname = $row['user_firstname'];
         $user_lastname = $row['user_lastname'];
         $user_email = $row['user_email'];
@@ -28,18 +28,42 @@ if (isset($_POST['edit_user'])) {
     $user_email = $_POST['user_email'];
     $user_password = $_POST['user_password'];
 
+// za hashiranje passworda u edit modu    
+$query = "SELECT randSalt FROM users";
+$select_randsalt_query = mysqli_query($connection, $query);
+
+if (!$select_randsalt_query) {
+    die("Query failed " . mysqli_error($connection));
+}
+
+$row = mysqli_fetch_array($select_randsalt_query);
+$salt = $row['randSalt'];
+
+$hashed_password = crypt($user_password, $salt);
+
+
+if ($user_password !== $user_db_password) {
 $query = "UPDATE users SET ";
     $query .= "user_firstname = '$user_firstname', ";
     $query .= "user_lastname = '$user_lastname', ";
     $query .= "user_role = '$user_role', ";
     $query .= "username = '$username', ";
     $query .= "user_email = '$user_email', ";
-    $query .= "user_password = '$user_password' ";
+    $query .= "user_password = '$hashed_password' ";
     $query .= "WHERE user_id = $the_user_id ";
+} else {
+    $query = "UPDATE users SET ";
+    $query .= "user_firstname = '$user_firstname', ";
+    $query .= "user_lastname = '$user_lastname', ";
+    $query .= "user_role = '$user_role', ";
+    $query .= "username = '$username', ";
+    $query .= "user_email = '$user_email' ";
+    $query .= "WHERE user_id = $the_user_id ";
+}
 
-    $edit_user_query = mysqli_query($connection, $query);
+$edit_user_query = mysqli_query($connection, $query);
     confirmQuery($edit_user_query);
-    
+
     header("Location: users.php");
    
 } // end of if    
@@ -92,7 +116,7 @@ if ($user_role == 'admin') {
 
 <div class="form-group">
     <label for="post_content">Password</label>
-    <input type="password" value="<?php echo $user_password; ?>" class="form-control" name="user_password">    
+    <input type="password" value="<?php echo $user_db_password; ?>" class="form-control" name="user_password">    
 </div>
 
 <div class="form-group">

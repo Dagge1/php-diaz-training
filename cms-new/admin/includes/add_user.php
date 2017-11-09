@@ -23,7 +23,7 @@ $query .= "'$username', '$user_email', '$user_password', '') "; // user image mo
 $create_user_query = mysqli_query($connection, $query);
 
 confirmQuery($create_user_query); // funkcija za potvrdu queryja, u functions.php
-
+header("Location: users.php");
 }
 ?>
 
