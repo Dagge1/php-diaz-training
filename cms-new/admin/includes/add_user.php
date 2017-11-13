@@ -13,6 +13,7 @@ if (isset($_POST['create_user'])) {
     $user_password = $_POST['user_password'];
     // $post_date = date('d-m-y');
 
+    $user_password = password_hash($user_password, PASSWORD_BCRYPT, ['cost' => 10]);
 //    move_uploaded_file($post_image_temp, "../images/{$post_image}"); // funkc. za ubacivanje imagea iz tmp u naš direktorij
 
 $query = "INSERT INTO users (user_firstname, user_lastname, user_role, username,

@@ -76,7 +76,7 @@ if (isset($_POST['checkBoxArray'])) {
             <tr>
                 <th><input type="checkbox" id="selectAllBoxes"></th>
                 <th>Id</th>
-                <th>Author</th>
+                <th>User</th>
                 <th>Title</th>
                 <th>Category</th>
                 <th>Status</th>
@@ -98,6 +98,7 @@ $select_posts = mysqli_query($connection, $query);
 while ($row = mysqli_fetch_assoc($select_posts)) {
     $post_id = $row['post_id'];
     $post_author = $row['post_author'];
+    $post_user = $row['post_user'];
     $post_title = $row['post_title'];
     $post_category_id = $row['post_category_id'];
     $post_status = $row['post_status'];
@@ -114,7 +115,13 @@ while ($row = mysqli_fetch_assoc($select_posts)) {
 
     <?php 
     echo "<td>{$post_id}</td>";
+
+if (isset($post_author) || !empty($post_author)) {
     echo "<td>{$post_author}</td>";
+} else if (isset($post_user) || !empty($post_user)) {
+    echo "<td>{$post_user}</td>";
+}    
+    
     echo "<td><a href='../post.php?p_id={$post_id}'>{$post_title}</a></td>";
     
     
@@ -132,7 +139,16 @@ while ($row = mysqli_fetch_assoc($select_categories_id)) {
     echo "<td>{$post_status}</td>";
     echo "<td><img src='../images/{$post_image}' class='img-responsive' style='max-height: 80px'></td>";
     echo "<td>{$post_tags}</td>";
-    echo "<td>{$post_comment_count}</td>";
+
+// izbroji komentare brojanjem redova sa komentarima na postu
+$query = "SELECT * from comments WHERE comment_post_id = $post_id";
+$send_comment_query = mysqli_query($connection, $query);
+$count_comments = mysqli_num_rows($send_comment_query);
+
+    echo "<td>{$count_comments}</td>";
+    // end of brojanje komentara
+    
+    
     echo "<td>{$post_date}</td>";
     echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
     echo "<td><a onClick=\"javascript: return confirm('Are you sure?'); \" href='posts.php?delete={$post_id}'>Delete</a></td>";

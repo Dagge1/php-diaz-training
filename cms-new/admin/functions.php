@@ -1,5 +1,12 @@
 <?php // funkcije za pojedine radnje u kodu - refactoring da bude kod na stranama čistiji
 
+// funkcija za čišćenje polja od karaktera zbog prevencije hakerskog sql injection
+function escape($string) {
+    global $connection;
+
+    return mysqli_real_escape_string($connection, trim($string));
+}
+
 
 // funkcija za potvrdu queryja jednokratno (ima dva ulazna argumenta)
 function confirm($query, $id) {  // id je $post_category_id i provjerava da li je unesen broj a ne string

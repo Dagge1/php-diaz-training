@@ -30,7 +30,7 @@ $select_all_posts_query = mysqli_query($connection, $query);
 
       while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
           $post_title = $row['post_title'];
-          $post_author = $row['post_author'];
+          $post_user = $row['post_user'];
           $post_date = $row['post_date'];
           $post_image = $row['post_image'];
           $post_content = $row['post_content'];
@@ -46,7 +46,7 @@ $select_all_posts_query = mysqli_query($connection, $query);
                     <?php echo $post_title ?>
                 </h2>
                 <p class="lead">
-                    <?php echo $post_author ?></a>
+                    <?php echo $post_user; ?></a>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span>&nbsp;<?php echo $post_date ?></p>
                 <hr>
@@ -82,11 +82,15 @@ if (!empty($comment_author) && !empty($comment_email) && !empty($comment_content
     if (!$create_comment_query) {
         die('QUERY FAILED ' . mysqli_error($connection));
     }
-//   dodavanje brojača za komentare u Admin / Posts
-    $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-    $query .= "WHERE post_id = $the_post_id ";
 
-    $update_comment_count = mysqli_query($connection, $query);
+
+
+/* stari brojač komentara
+$query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+$query .= "WHERE post_id = $the_post_id ";
+
+$update_comment_count = mysqli_query($connection, $query);
+*/
 } else {
     echo "<script>alert('Fields cannot be empty')</script>";
 } // end of if

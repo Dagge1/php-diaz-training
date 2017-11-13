@@ -14,6 +14,11 @@ if (isset($_POST['submit'])) {
     $email = mysqli_real_escape_string($connection, $email);
     $password = mysqli_real_escape_string($connection, $password);
 
+// koristimo password_hash za enkriptiranje jer je bolji od crypt() a i ne treba salt + imamo opciju cost
+    $password = password_hash($password, PASSWORD_BCRYPT, ['cost' => 10]);    
+
+
+/* ovo ne treba, to je vađenje salt-aiz baze za crypt() koji ne koristimo više
     $query = "SELECT randSalt FROM users";
     $select_randsalt_query = mysqli_query($connection, $query);
 
@@ -24,7 +29,7 @@ if (isset($_POST['submit'])) {
     $row = mysqli_fetch_array($select_randsalt_query);
     $salt = $row['randSalt'];
     $password = crypt($password, $salt);  // ovo je prebačeno u login.php
-
+*/
     
 $query = "INSERT INTO users (username, user_email, user_firstname, user_lastname, user_image, user_password, user_role) ";
 $query .= "VALUES ('$username', '$email', '', '', '', '$password', 'subscriber') ";
